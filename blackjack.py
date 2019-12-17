@@ -159,9 +159,10 @@ def run_bj(blackjack):
     deck = bj.initialize_cards()
     run = True
     win_count = 0
+    plays = 0
 
     while run == True:
-        print(win_count)
+        plays += 1
         # shuffle the deck
         bj.shuffle_cards(deck)
         # draw a player hand
@@ -184,6 +185,7 @@ def run_bj(blackjack):
         if player_BJ and computer_BJ:
             print("Both tie")
         elif player_BJ:
+            win_count += 1
             print("Player wins")
         elif computer_BJ:
             print("Computer wins")
@@ -244,6 +246,7 @@ def run_bj(blackjack):
                     print("Computer hand adjusted: ", end = '')
                     bj.display_cards(computer_hand[1:])
                 if computer_stand > 21:
+                    win_count += 1
                     print("Player wins")
                 elif computer_stand == player_stand:
                     print("Both tie")
@@ -259,8 +262,5 @@ def run_bj(blackjack):
         if play_again == "No":
             break
     
-    return win_count
-
-blackjack = Blackjack()
-run = run_bj(blackjack)
+    return win_count, plays
 

@@ -12,7 +12,7 @@ class Roulette:
         # self.all = ['0','1 ','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','even','odd','low','high']
         self.roll = 0
         self.id = 2
-        self.player_bet = {'number' : [],'even' : 0,'odd' : 0, 'high': 0,'low': 0}
+        self.player_bet = {'number' : [0,0],'even' : 0,'odd' : 0, 'high': 0,'low': 0}
 
     def board(self):
         
@@ -27,48 +27,40 @@ class Roulette:
 
             betType = input('Choose a number or even or odd or high or low (play): ')
             if betType == 'number':
-                pick_num = float(input('Pick a number: '))               
-                betAmount = int(input('Bet amount: '))
-                self.player_bet[betType].append([pick_num,betAmount])
-                print(self.player_bet)
-                
+                pick_num = float(input('Pick a number: '))
+                self.player_bet[betType][0] = pick_num
+                self.player_bet[betType][1] = 1
+                print(self.player_bet)         
             elif betType == 'play':
                 break
             else:
                 try:
                     self.player_bet[betType]
-                    betAmount = int(input('Bet amount: '))
-                    self.player_bet[betType] += betAmount
+                    self.player_bet[betType] = 1
                     print(self.player_bet)
-
                 except KeyError:
                     pass
-    
-    def spin(self):
+    def spin(self):                                                           
         spin = random.randint(0,36)
         self.roll = spin
         print(f'Landed on: {spin}')
 
-    def number(self,bet,number):
-            if self.roll == number[0]:
+    def number(self,bet):
+            if self.roll == self.player_bet[bet][0] :
                 print(f'You win {self.roll}')
-                number[1] *= 10
-                
             else:
-                number[1] = 0
+                self.player_bet[bet][1] = 0
 
     def even_odd(self,bet):
         if self.roll % 2 == 0:
             if bet == 'even':
                 print('You win even')
-                self.player_bet[bet] *= 2
             else:
                 print('You lose even')
                 self.player_bet[bet] = 0
         elif self.roll %2 != 0:
             if bet == 'odd':
                 print('You win odd')
-                self.player_bet[bet] *= 2
             else:
                 print('You lose odd')
                 self.player_bet[bet] = 0
@@ -77,14 +69,12 @@ class Roulette:
         if self.roll <= 18:
             if bet == 'low':
                 print('You win low')
-                self.player_bet[bet] *= 2
             else:
                 print('You lose low')
                 self.player_bet[bet] = 0
         elif self.roll >= 19:
             if bet == 'high':
                 print('You win high')
-                self.player_bet[bet] *= 2
             else:
                 print('You lose high')
                 self.player_bet[bet] = 0
@@ -93,9 +83,8 @@ class Roulette:
 
         for bet in self.player_bet:
             if bet == 'number':
-                if len(self.player_bet[bet]) > 0:
-                    for number in self.player_bet[bet]:
-                        self.number(bet,number)
+                if  (self.player_bet[bet][1]) > 0:
+                    self.number(bet)
             else:
                 if self.player_bet[bet] > 0:
                     if bet == "even" or bet == "odd":
@@ -103,46 +92,21 @@ class Roulette:
                     else:
                         self.high_low(bet)
 
-
-
-
-
-
-
-
-
-
-
-
-game = Roulette()
-
-while True:
-    game.board()
-    game.bet()
-    game.spin()
-    game.check()
+def run_rl():
+    game = Roulette()
+    plays = 0
+    while True:
+        plays += 1
+        game.board()
+        game.bet()
+        game.spin()
+        game.check()
+        playagain = input('Play again[Y/N]: ')
+        while playagain != 'Y' and playagain != 'N':
+            playagain = input('Play again[Y/N]: ')
+        if playagain == 'N':
+            break
+        
+            
     
-
-# while True:
-#     game.board()
-
-#     if game.result() == 'You Win!':
-#         again = input('Play again[Y/N]: ')
-#         if again == 'Y':      
-#             game.board()
-#             game.result()
-#         elif again == 'N':
-#             break
-#         else:
-#             again   = input('Play again[Y/N]: ')
-
-
-
-# while True:
-
-#     betType = input('Choose a number or type you want to bet on ')
-
-#     if betType == :
-"stb4v1cy"
-"3615"
     

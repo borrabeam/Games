@@ -7,9 +7,7 @@ class GameStat:
         self.num_wins = num_wins
         
     def __str__(self):
-
-        string = ""
-        string += f"\n{self.name}: #plays = {self.num_plays} #wins = {self.num_wins}"
+        string = f"\n{self.name}: #plays = {self.num_plays} #wins = {self.num_wins}"
         return string
 
     def update_plays(self,num_plays):
